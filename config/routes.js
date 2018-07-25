@@ -1,15 +1,5 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-
-
-
-/**
- * Expose
- */
-
 module.exports = function (app, passport) {
 
   // Home Routes
@@ -22,7 +12,7 @@ module.exports = function (app, passport) {
     // treat as 404
     if (err.message
       && (~err.message.indexOf('not found')
-      || (~err.message.indexOf('Cast to ObjectId failed')))) {
+        || (~err.message.indexOf('Cast to ObjectId failed')))) {
       return next();
     }
     console.error(err.stack);

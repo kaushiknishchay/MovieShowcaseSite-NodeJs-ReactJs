@@ -1,13 +1,5 @@
 'use strict';
 
-/*
- * nodejs-express-mongoose
- */
-
-/**
- * Module dependencies
- */
-
 require('dotenv').config();
 
 const fs = require('fs');
@@ -25,16 +17,11 @@ mongoose.connect(config.db);
 
 const connection = mongoose.connection;
 
-/**
- * Expose
- */
-
 module.exports = {
   app,
   connection
 };
 
-// Bootstrap routes
 require('./config/passport')(passport);
 require('./config/express')(app, passport);
 require('./config/routes')(app, passport);
@@ -43,7 +30,7 @@ connection
   .on('error', console.error.bind(console, 'connection error:'))
   .once('open', listen);
 
-function listen () {
+function listen() {
   if (app.get('env') === 'test') return;
   app.listen(port);
   console.log('Express app started on port ' + port);

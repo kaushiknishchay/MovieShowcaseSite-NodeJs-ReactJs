@@ -1,20 +1,11 @@
-
-/**
- * Module dependencies.
- */
-
 var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../../app/User/model');
 
-/**
- * Expose
- */
-
 module.exports = new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
+  usernameField: 'email',
+  passwordField: 'password'
+},
   function (email, password, done) {
     var options = {
       criteria: { email: email }

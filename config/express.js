@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express');
 var session = require('express-session');
 var compression = require('compression');
@@ -23,10 +18,6 @@ var pkg = require('../package.json');
 
 var env = process.env.NODE_ENV || 'development';
 
-/**
- * Expose
- */
-
 module.exports = function (app, passport) {
 
   // Compression middleware (should be placed before express.static)
@@ -34,7 +25,7 @@ module.exports = function (app, passport) {
     threshold: 512
   }));
 
-  // Static files middleware
+  // define static files directory
   app.use(express.static(config.root + '/public'));
 
   // Use winston on production
@@ -71,6 +62,8 @@ module.exports = function (app, passport) {
     extended: true
   }));
   app.use(bodyParser.json());
+
+
   app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
       // look in urlencoded POST bodies and delete it
@@ -90,7 +83,7 @@ module.exports = function (app, passport) {
     saveUninitialized: true,
     store: new mongoStore({
       url: config.db,
-      collection : 'sessions'
+      collection: 'sessions'
     })
   }));
 
