@@ -12,7 +12,7 @@ var mongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 var winston = require('winston');
 var helpers = require('view-helpers');
-var jade = require('jade');
+var pug = require('pug');
 var config = require('./');
 var pkg = require('../package.json');
 
@@ -48,7 +48,7 @@ module.exports = function (app, passport) {
 
   // set views path and default layout
   app.set('views', config.root + '/app/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'pug');
 
   // expose package.json to views
   app.use(function (req, res, next) {
