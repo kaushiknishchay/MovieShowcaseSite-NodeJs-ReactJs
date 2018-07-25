@@ -1,7 +1,15 @@
-A Boiler plate for REST API using node mongoose express
+Forked from codebrahma/Node-Express-Mongoose-Boilerplate
 
-## Usage
-    $ npm install
-    $ cp .env.example .env
-    $ npm start
+## Setup
 
+- edit files in `env/*` to setup database configurations
+
+## Installation
+
+```
+npm install
+
+cp .env.example .env
+
+npm start
+```

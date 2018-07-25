@@ -1,5 +1,5 @@
 module.exports = {
-  db: 'mongodb://localhost/your_project_production',
+  db: 'mongodb://localhost:27017/your_project_production',
   facebook: {
     clientID: 'APP_ID',
     clientSecret: 'SECRET',
