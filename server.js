@@ -1,18 +1,21 @@
-'use strict';
-
 require('dotenv').config();
 
-const fs = require('fs');
-const join = require('path').join;
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+
+/**
+ * Get enviornment specific config
+ */
 const config = require('./config');
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 
+/**
+ * Connect to DB
+ */
 mongoose.connect(config.db, { useNewUrlParser: true });
 
 const connection = mongoose.connection;
@@ -22,7 +25,12 @@ module.exports = {
   connection
 };
 
-require('./config/passport')(passport);
+
+/**
+ * Setup Passport Local Strategy
+ */
+require('./config/passport/local');
+
 require('./config/express')(app, passport);
 require('./config/routes')(app, passport);
 

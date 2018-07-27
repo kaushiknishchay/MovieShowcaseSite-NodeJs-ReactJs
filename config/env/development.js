@@ -1,5 +1,5 @@
 module.exports = {
-  db: 'mongodb://localhost:27017/boilerplate',
+  db: 'mongodb://localhost:27017/movieBooking',
   facebook: {
     clientID: 'APP_ID',
     clientSecret: 'SECRET',
