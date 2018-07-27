@@ -2,9 +2,6 @@
   "name": "express-mongoose-boilerplate",
   "description": "A boilerplate application for express mongoose",
   "version": "1.0.0",
-  "author": {
-    "name": "Codebrahma"
-  },
   "engines": {
     "node": ">=6.x"
   },
