@@ -4,6 +4,7 @@ module.exports = function (app, passport) {
 
   // Home Routes
   app.use('/', require('../app/Auth')(passport));
+  app.use('/', require('../app/Movies')(passport));
   app.use('/', require('../app/Home')(passport));
 
   /**
