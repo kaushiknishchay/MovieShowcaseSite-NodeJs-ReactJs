@@ -1,5 +1,4 @@
 const flatMap = require('lodash/map');
-const partialRight = require('lodash/partialRight');
 const pick = require('lodash/pick');
 const Actor = require('../../models/Actor');
 const Movie = require('../../models/Movie');
@@ -12,14 +11,14 @@ const getAllMovies = function (req, res, next) {
   if (movieId) {
     Movie
       .findById(movieId)
-      .populate('cast', ['name', 'roleName'])
+      .populate('cast', ['name', 'roleName', 'photo'])
       .exec()
       .then(movie => res.json(movie))
       .catch(err => next(err));
   } else {
     Movie
       .find()
-      .populate('cast', ['name', 'roleName'])
+      .populate('cast', ['name', 'roleName', 'photo'])
       .exec()
       .then(movie => res.json(movie))
       .catch(err => next(err));
@@ -48,7 +47,6 @@ const addMovie = function (req, res, next) {
     poster,
     trailer,
     censorRating,
-    // cast,
     duration,
     releaseDate,
     userRating,
@@ -76,9 +74,6 @@ const addMovie = function (req, res, next) {
         .catch(err => next(err));
     })
     .catch(err => next(err));
-
-  /*
-    */
 };
 
 const editMovie = function (req, res, next) {
