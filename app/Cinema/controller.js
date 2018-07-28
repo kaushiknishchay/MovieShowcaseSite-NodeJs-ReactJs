@@ -3,7 +3,7 @@ const Cinema = require('../../models/Cinema');
 const getAllCinemas = function (req, res, next) {
   const {
     cinemaId,
-  } = req.param;
+  } = req.params;
 
   if (cinemaId) {
     Cinema
