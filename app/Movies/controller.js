@@ -3,7 +3,7 @@ const Movie = require('../../models/Movie');
 const getAllMovies = function (req, res, next) {
   const {
     movieId,
-  } = req.query;
+  } = req.param;
 
   if (movieId) {
     Movie

@@ -15,6 +15,9 @@ var ActorSchema = new Schema({
     type: String,
     default: ''
   },
+  roleName: {
+    type: String,
+  }
 });
 
 module.exports = mongoose.model('Actor', ActorSchema, 'actors');

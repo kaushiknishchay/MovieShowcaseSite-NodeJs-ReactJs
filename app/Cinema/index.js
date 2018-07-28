@@ -1,30 +1,30 @@
 var Router = require('express').Router();
-var MovieController = require('./controller');
+var CinemaController = require('./controller');
 
 module.exports = function (passport) {
 
   Router.get(
-    '/movie/:movieId?',
+    '/cinema/:cinemaId?',
     // passport.authenticate('jwt', { session: false }),
-    MovieController.getAllMovies
+    CinemaController.getAllCinemas
   );
 
   Router.post(
-    '/movie/add',
+    '/cinema/add',
     passport.authenticate('jwt', { session: false }),
-    MovieController.addMovie
+    CinemaController.addCinema
   );
 
   Router.patch(
-    '/movie/:movieId',
+    '/cinema/:cinemaId',
     passport.authenticate('jwt', { session: false }),
-    MovieController.editMovie
+    CinemaController.editCinema
   );
 
   Router.delete(
-    '/movie/:movieId',
+    '/cinema/:cinemaId',
     passport.authenticate('jwt', { session: false }),
-    MovieController.deleteMovieById
+    CinemaController.deleteCinemaById
   );
 
   return Router;

@@ -41,6 +41,10 @@ var MovieSchema = new Schema({
   genre: {
     type: [String],
   },
+  cinemas: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cinema' }],
+    default: []
+  }
 });
 
 module.exports = mongoose.model('Movie', MovieSchema, 'movies');
