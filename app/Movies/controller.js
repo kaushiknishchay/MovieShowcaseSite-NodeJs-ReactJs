@@ -81,10 +81,25 @@ const editMovie = function (req, res, next) {
     movieId,
   } = req.params;
 
+  const attributes = pick(req.body, [
+    'name',
+    'synopsis',
+    'poster',
+    'trailer',
+    'censorRating',
+    'cast',
+    'duration',
+    'releaseDate',
+    'userRating',
+    'languages',
+    'genre',
+    'cinemas'
+  ]);
+
   Movie
     .findByIdAndUpdate(
       movieId,
-      req.body,
+      attributes,
       {
         new: true
       }
