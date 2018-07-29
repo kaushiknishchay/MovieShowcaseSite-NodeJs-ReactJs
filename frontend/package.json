@@ -11,7 +11,22 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "sass:watch" : "sass --watch src/styles/scss:src/styles/css",
+    "sass:build": "sass --update src/styles/scss:src/styles/css",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "eslintIgnore": [
+    "index.js",
+    "registerServiceWorker.js",
+    "coverage/*",
+    "*__mocks__*"
+  ],
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0"
   }
 }
