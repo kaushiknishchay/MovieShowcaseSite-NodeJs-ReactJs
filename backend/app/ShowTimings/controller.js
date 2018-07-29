@@ -16,6 +16,12 @@ const getAllMovieTimings = function (req, res, next) {
   }
 };
 
+/**
+ *
+
+ _.map(_.groupBy(show, u=>u.showDate), (items, key)=> ({key: key, items:_.groupBy(items, item=>item.screenType)}))
+
+ */
 
 const addShowTiming = function (req, res, next) {
   const {
