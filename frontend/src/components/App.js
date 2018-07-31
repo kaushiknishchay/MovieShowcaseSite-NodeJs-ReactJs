@@ -1,83 +1,59 @@
 import React, { Component } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar/Toolbar';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import Typography from '@material-ui/core/Typography/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+
+import CustomAppBar from './AppBar';
+import '../styles/css/App.css';
 
 
 class App extends Component {
   render() {
-    const auth = true;
     return (
       <div>
-        <AppBar
-          position="static"
-          color="primary"
-        >
-          <Toolbar>
-            <IconButton
-              style={{
-                marginLeft: -12,
-                marginRight: 20,
-              }}
-              color="inherit"
-              aria-label="Menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="title"
-              color="inherit"
-              style={{
-                flexGrow: 1,
-              }}
-            >
-              Photos
-            </Typography>
-            {auth && (
-              <div>
-                <IconButton
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>
-                    Profile
-                  </MenuItem>
-                  <MenuItem onClick={this.handleClose}>
-                    My account
-                  </MenuItem>
-                </Menu>
-              </div>
-            )}
-          </Toolbar>
-        </AppBar>
+        <CustomAppBar />
         <div className="content">
-          <p className="App-intro">
-            To get started, edit
-            <code>
-              src/App.js
-            </code>
-            and save to reload.
-          </p>
+          <Grid container spacing={24}>
+            <Grid item xs={4}>
+              <Card style={{
+                display: 'flex',
+                flex: 1,
+              }}
+              >
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+                >
+                  <CardContent style={{
+                    flex: '1 0 auto',
+                  }}
+                  >
+                    <Typography variant="headline">Live From Space</Typography>
+                    <Typography variant="subheading" color="textSecondary">
+                      This impressive paella is a perfect party d
+                      ish and a fun meal to cook together wit
+                      ish and a fun meal to cook together wit
+                      ish and a fun meal to cook together wit
+                      ish and a fun meal to cook together wit
+                    </Typography>
+                  </CardContent>
+                </div>
+                <CardMedia
+                  style={{
+                    width: 151,
+                    minWidth: 151,
+                    height: 151,
+                  }}
+                  image="https://picsum.photos/151/151/?random"
+                  title="Live from space album cover"
+                />
+              </Card>
+            </Grid>
+          </Grid>
         </div>
       </div>
     );
