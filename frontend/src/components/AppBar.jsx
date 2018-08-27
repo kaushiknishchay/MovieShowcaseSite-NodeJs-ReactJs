@@ -32,7 +32,7 @@ class CustomAppBar extends Component {
 
     return (
       <AppBar
-        position="static"
+        position="fixed"
         color="primary"
       >
         <Toolbar>
