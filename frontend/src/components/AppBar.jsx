@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography/Typography';
@@ -8,29 +9,44 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Button from '@material-ui/core/Button/Button';
 import AppBar from '@material-ui/core/AppBar';
+import connect from 'react-redux/es/connect/connect';
+import isNil from 'lodash/isNil';
+
+import { bindActionCreators } from 'redux';
 import LoginForm from './LoginForm';
+import { doLogoutAction } from '../actions';
 
 
 class CustomAppBar extends Component {
   state = {
     showLoginModal: false,
-    anchorEl: null,
+    profileMenuAnchor: null,
   };
 
   handleMenu = (event) => {
-    this.setState({ anchorEl: event.currentTarget });
+    event.preventDefault();
+    this.setState({ profileMenuAnchor: event.currentTarget });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ profileMenuAnchor: null });
+  };
+
+  handleModalClose = type => event => this.setState({ showLoginModal: type === 'open', profileMenuAnchor: null });
+
+  handleLogOut = (e) => {
+    e.preventDefault();
+    const { doLogout } = this.props;
+    doLogout();
   };
 
 
   render() {
-    const isLoggedIn = false;
+    const { userAuthToken, isAdmin } = this.props;
+    const isLoggedIn = !isNil(userAuthToken);
 
-    const { anchorEl, showLoginModal } = this.state;
-    const open = Boolean(anchorEl);
+    const { profileMenuAnchor, showLoginModal } = this.state;
+    const open = Boolean(profileMenuAnchor);
 
     return (
       <AppBar
@@ -62,11 +78,7 @@ class CustomAppBar extends Component {
             && (
               <Button
                 color="inherit"
-                onClick={() => {
-                  this.setState({
-                    showLoginModal: true,
-                  });
-                }}
+                onClick={this.handleModalClose('open')}
               >
                 Login
               </Button>
@@ -85,7 +97,7 @@ class CustomAppBar extends Component {
                 </IconButton>
                 <Menu
                   id="menu-appbar"
-                  anchorEl={anchorEl}
+                  anchorEl={profileMenuAnchor}
                   anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -97,30 +109,59 @@ class CustomAppBar extends Component {
                   open={open}
                   onClose={this.handleClose}
                 >
+                  {
+                    isAdmin
+                    && (
+                      <MenuItem onClick={this.handleClose}>
+                        Admin Panel
+                      </MenuItem>
+                    )
+                  }
                   <MenuItem onClick={this.handleClose}>
                     Profile
                   </MenuItem>
                   <MenuItem onClick={this.handleClose}>
                     My account
                   </MenuItem>
+                  <MenuItem onClick={this.handleLogOut}>
+                    Logout
+                  </MenuItem>
                 </Menu>
               </div>
             )}
         </Toolbar>
         {
-          showLoginModal && (
-            <LoginForm onClose={() => {
-              this.setState({
-                showLoginModal: false,
-              });
-            }}
-            />
+          (showLoginModal) && (
+            <LoginForm onClose={this.handleModalClose('close')} />
           )}
       </AppBar>
     );
   }
 }
 
-CustomAppBar.propTypes = {};
+CustomAppBar.defaultProps = {
+  userAuthToken: null,
+  isAdmin: false,
+};
 
-export default CustomAppBar;
+CustomAppBar.propTypes = {
+  userAuthToken: PropTypes.string,
+  isAdmin: PropTypes.bool,
+  doLogout: PropTypes.func.isRequired,
+};
+
+
+function initMapStateToProps(state) {
+  return {
+    isAdmin: state.getIn(['auth', 'isAdmin']),
+    userAuthToken: state.getIn(['auth', 'authToken']),
+  };
+}
+
+function initMapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    doLogout: doLogoutAction,
+  }, dispatch);
+}
+
+export default connect(initMapStateToProps, initMapDispatchToProps)(CustomAppBar);

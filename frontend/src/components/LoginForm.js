@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -8,9 +9,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
-import axios from 'axios';
-import isEmpty from 'lodash/isEmpty';
 import Typography from '@material-ui/core/Typography/Typography';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Immutable from 'immutable';
+
+import { isNil } from 'lodash/lang';
+import { doLogin } from '../actions';
 
 
 class LoginForm extends Component {
@@ -19,8 +24,6 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
-      errors: [],
-      isLoading: false,
     };
   }
 
@@ -33,43 +36,28 @@ class LoginForm extends Component {
 
   handleLoginSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      isLoading: true,
-    });
-
-    setTimeout(() => {
-      const { email, password } = this.state;
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/auth/login',
-        data: {
-          email,
-          password,
-        },
-      })
-        .then((response) => {
-          console.log(response);
-          this.setState({
-            authToken: response.data.token,
-            isLoading: false,
-            errors: [],
-          });
-        })
-        .catch((reason) => {
-          this.setState({
-            isLoading: false,
-            errors: reason.response.data.errors,
-          });
-        });
-    }, 2000);
+    const { email, password } = this.state;
+    const { doLoginAction } = this.props;
+    doLoginAction(email, password);
   };
 
   render() {
-    const { onClose } = this.props;
-    const { isLoading, errors } = this.state;
+    const { email, password } = this.state;
+    const {
+      onClose, loginErrors: errors,
+      userAuthToken, loginLoading,
+    } = this.props;
+
+    if (!isNil(userAuthToken)) {
+      onClose();
+      return null;
+    }
+
+    const isLoading = loginLoading;
 
     return (
       <Dialog
+        fullWidth
         open
         onClose={onClose}
         aria-labelledby="form-dialog-title"
@@ -79,10 +67,10 @@ class LoginForm extends Component {
         </DialogTitle>
         <DialogContent>
           {
-            !isEmpty(errors)
+            !errors.isEmpty()
               ? (
                 <Typography variant="body1" color="error">
-                  {errors.toString()}
+                  {errors.toArray().toString()}
                 </Typography>
               )
               : <DialogContentText color="error" />
@@ -93,6 +81,7 @@ class LoginForm extends Component {
             id="name"
             label="Email Address"
             type="email"
+            value={email}
             onChange={this.handleInputChange('email')}
             fullWidth
           />
@@ -101,6 +90,7 @@ class LoginForm extends Component {
             id="password"
             label="Password"
             type="password"
+            value={password}
             onChange={this.handleInputChange('password')}
             fullWidth
           />
@@ -124,8 +114,29 @@ class LoginForm extends Component {
   }
 }
 
+LoginForm.defaultProps = {
+  userAuthToken: null,
+};
 LoginForm.propTypes = {
+  loginLoading: PropTypes.bool.isRequired,
+  userAuthToken: PropTypes.string,
   onClose: PropTypes.func.isRequired,
+  loginErrors: PropTypes.instanceOf(Immutable.List).isRequired,
+  doLoginAction: PropTypes.func.isRequired,
 };
 
-export default LoginForm;
+function initMapStateToProps(state) {
+  return {
+    loginLoading: state.getIn(['auth', 'loginLoading']),
+    userAuthToken: state.getIn(['auth', 'authToken']),
+    loginErrors: state.getIn(['auth', 'loginErrors']),
+  };
+}
+
+function initMapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    doLoginAction: doLogin,
+  }, dispatch);
+}
+
+export default connect(initMapStateToProps, initMapDispatchToProps)(LoginForm);
