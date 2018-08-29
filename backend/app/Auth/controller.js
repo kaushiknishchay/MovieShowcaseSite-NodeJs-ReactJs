@@ -9,7 +9,7 @@ const login = function (passport) {
     passport.authenticate('local', { session: false }, (err, user, info) => {
       if (err || !user) {
         return res.status(400).json({
-          message: 'User Id or Password is wrong',
+          errors: 'Email or Password is wrong.',
           user: user
         });
       }
@@ -17,10 +17,12 @@ const login = function (passport) {
         if (err) {
           next(err);
         }
+        const role = user.role === 'admin' ? { isAdmin: true } : {};
         const token = jwt.sign(user.toObject(), ConfigKeys.JWTKey);
         return res.json({
           success: true,
           token,
+          ...role
         });
       });
     })(req, res);

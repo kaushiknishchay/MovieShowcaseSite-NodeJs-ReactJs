@@ -8,10 +8,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Button from '@material-ui/core/Button/Button';
 import AppBar from '@material-ui/core/AppBar';
+import LoginForm from './LoginForm';
 
 
 class CustomAppBar extends Component {
   state = {
+    showLoginModal: false,
     anchorEl: null,
   };
 
@@ -27,7 +29,7 @@ class CustomAppBar extends Component {
   render() {
     const isLoggedIn = false;
 
-    const { anchorEl } = this.state;
+    const { anchorEl, showLoginModal } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -58,7 +60,14 @@ class CustomAppBar extends Component {
           {
             !isLoggedIn
             && (
-              <Button color="inherit">
+              <Button
+                color="inherit"
+                onClick={() => {
+                  this.setState({
+                    showLoginModal: true,
+                  });
+                }}
+              >
                 Login
               </Button>
             )
@@ -98,6 +107,15 @@ class CustomAppBar extends Component {
               </div>
             )}
         </Toolbar>
+        {
+          showLoginModal && (
+            <LoginForm onClose={() => {
+              this.setState({
+                showLoginModal: false,
+              });
+            }}
+            />
+          )}
       </AppBar>
     );
   }
