@@ -4,9 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper/Paper';
 import PropTypes from 'prop-types';
 import emptyMovieIcon from '../assets/images/empty_movie.svg';
+import error404Icon from '../assets/images/404.svg';
 
 
-const EmptyResult = ({ title, subHeading }) => (
+const EmptyResult = ({ title, subHeading, type }) => (
   <Paper
     style={{
       padding: '2em',
@@ -18,7 +19,7 @@ const EmptyResult = ({ title, subHeading }) => (
       style={{
         margin: 'auto',
         width: '300px',
-        height: 260,
+        height: type === '404' ? 300 : 260,
         overflow: 'hidden',
         marginBottom: 30,
       }}
@@ -26,12 +27,12 @@ const EmptyResult = ({ title, subHeading }) => (
       <CardMedia
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.05)',
-          borderRadius: 400,
-          width: '300px',
-          height: '300px',
+          borderRadius: type === '404' ? 0 : 400,
+          width: type === '404' ? '300px' : '300px',
+          height: type === '404' ? '300px' : '300px',
           margin: 'auto',
         }}
-        image={emptyMovieIcon}
+        image={type === '404' ? error404Icon : emptyMovieIcon}
         title={title}
       />
     </div>
@@ -54,11 +55,13 @@ const EmptyResult = ({ title, subHeading }) => (
 );
 
 EmptyResult.defaultProps = {
+  type: 'empty',
   title: 'No Movies found.',
   subHeading: 'There are no movies for the selected filters.',
 };
 
 EmptyResult.propTypes = {
+  type: PropTypes.string,
   title: PropTypes.string,
   subHeading: PropTypes.string,
 };

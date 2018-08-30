@@ -15,8 +15,9 @@ const NotFound = () => (
     }}
   >
     <EmptyResult
-      title="404 Not Found"
-      subHeading="The page requested was not found."
+      type="404"
+      title=""
+      subHeading=""
     />
     <Button
       size="large"
