@@ -2,10 +2,6 @@
 import React, { Component } from 'react';
 import map from 'lodash/map';
 import range from 'lodash/range';
-import intersection from 'lodash/intersection';
-import filter from 'lodash/filter';
-import axios from 'axios';
-import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List/List';
 import { Carousel } from 'react-responsive-carousel';
 import Drawer from '@material-ui/core/Drawer/Drawer';
@@ -13,69 +9,27 @@ import Button from '@material-ui/core/Button/Button';
 import Divider from '@material-ui/core/Divider/Divider';
 import Checkbox from '@material-ui/core/Checkbox/Checkbox';
 import ListItem from '@material-ui/core/ListItem/ListItem';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader/ListSubheader';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import { Map } from 'immutable';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import '../styles/css/App.css';
-import MovieCard from '../components/MovieCard';
-import EmptyResult from '../components/EmptyResult';
 import PageBase from '../components/PageBase';
+import MovieGridContainer from './MovieGridContainer';
 
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      moviesList: [],
-      wholeMovieList: [],
       checkedLanguages: [],
-      pageNum: 1,
       checkedGenre: [],
     };
-    this.languageList = [
-      'English', 'Hindi', 'Tamil', 'Kannada', 'Marathi',
-    ];
-    this.genreList = [
-      'Action', 'Adventure', 'Romance', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Thriller',
-    ];
-
-    this.perPageItemCount = 6;
   }
 
-
-  componentDidMount() {
-    axios({
-      method: 'GET',
-      url: 'http://localhost:3000/movie',
-    })
-      .then((res) => {
-        if (res && res.data) {
-          this.setState({
-            wholeMovieList: res.data,
-            moviesList: res.data.slice(0, this.perPageItemCount),
-          });
-        }
-      });
-  }
-
-  fetchMoreMovies = () => {
-    setTimeout(() => {
-      const { wholeMovieList, pageNum } = this.state;
-
-      const startIndex = this.perPageItemCount * pageNum;
-      const endIndex = (pageNum + 1) * this.perPageItemCount;
-
-      const newMovies = wholeMovieList.slice(startIndex, endIndex);
-
-      this.setState(prevState => ({
-        pageNum: prevState.pageNum + 1,
-        moviesList: prevState.moviesList.concat(newMovies),
-      }));
-    }, 100);
-  };
 
   handleLanguageGenreToggle = (value, type) => () => {
     const { checkedLanguages, checkedGenre } = this.state;
@@ -101,33 +55,13 @@ class Home extends Component {
 
   render() {
     const {
-      wholeMovieList,
-      moviesList: fullMovieList,
       checkedLanguages,
       checkedGenre,
     } = this.state;
 
-    const checkedLanguagesValues = checkedLanguages.map(lang => this.languageList[lang]);
-
-    const checkedGenresValues = checkedGenre.map(genre => this.genreList[genre]);
-
-    let moviesList = fullMovieList;
-    if (checkedLanguages.length > 0 || checkedGenre.length > 0) {
-      moviesList = filter(
-        fullMovieList,
-        (movie) => {
-          const genreMatching = intersection(movie.genre, checkedGenresValues);
-          const langMatching = intersection(movie.languages, checkedLanguagesValues);
-
-          if (checkedGenre.length === 0) return (langMatching.length > 0);
-          if (checkedLanguages.length === 0) return (genreMatching.length > 0);
-          return (langMatching.length > 0 && genreMatching.length > 0);
-        },
-      );
-    }
-
-    const hasMoreMovies = moviesList.length < wholeMovieList.length;
-
+    const {
+      languageList, genreList,
+    } = this.props;
 
     return (
       <PageBase>
@@ -190,7 +124,7 @@ class Home extends Component {
                 </div>
               </ListSubheader>
               {
-                map(this.languageList, (lang, indx) => (
+                map(languageList, (lang, indx) => (
                   <ListItem
                     style={{
                       paddingTop: 0,
@@ -232,7 +166,7 @@ class Home extends Component {
                 </div>
               </ListSubheader>
               {
-                map(this.genreList, (genre, indx) => (
+                map(genreList, (genre, indx) => (
                   <ListItem
                     style={{
                       paddingTop: 0,
@@ -254,55 +188,28 @@ class Home extends Component {
             </List>
             <Divider />
           </Drawer>
-          <InfiniteScroll
-            dataLength={moviesList.length}
-            next={this.fetchMoreMovies}
-            hasMore={hasMoreMovies}
-            loader={(
-              <div style={{ margin: '20px auto', width: '100%', textAlign: 'center' }}>
-                <CircularProgress />
-              </div>
-            )}
-          >
-            <Grid
-              className="content__main"
-              container
-              spacing={24}
-              style={{
-                padding: '0rem 2rem',
-              }}
-            >
-              {
-                moviesList.length === 0 && (
-                  <Grid
-                    item
-                    xs={12}
-                  >
-                    <EmptyResult />
-                  </Grid>
-                )
-              }
-
-              {
-                map(moviesList, movie => (
-                  <MovieCard
-                    key={movie._id}
-                    name={`${movie.name}`}
-                    desc={movie.synopsis}
-                    censorRating={movie.censorRating}
-                    genre={movie.genre}
-                    language={movie.languages}
-                    poster={movie.poster}
-                    userRating={movie.userRating}
-                  />
-                ))
-              }
-            </Grid>
-          </InfiniteScroll>
+          <MovieGridContainer
+            checkedGenre={checkedGenre}
+            checkedLanguages={checkedLanguages}
+          />
         </div>
       </PageBase>
     );
   }
 }
 
-export default Home;
+function initMapStateToProps(state) {
+  const movie = Map(state.movie);
+  return {
+    languageList: movie.get('languageList').toJS(),
+    genreList: movie.get('genreList').toJS(),
+  };
+}
+
+Home.propTypes = {
+  languageList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  genreList: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+
+export default connect(initMapStateToProps, null)(Home);

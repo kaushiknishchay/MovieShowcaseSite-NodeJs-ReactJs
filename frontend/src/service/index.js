@@ -6,4 +6,6 @@ export default {
     email,
     password,
   }),
+
+  fetchMovies: () => httpRequest.get('movie'),
 };

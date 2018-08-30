@@ -4,6 +4,8 @@ import logger from 'redux-logger';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import immutableTransform from 'redux-persist-transform-immutable';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 import rootReducer from '../reducers/index';
 import rootSagas from '../sagas';
 
@@ -22,7 +24,7 @@ const pReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(
   pReducer,
-  ((process.env.NODE_ENV !== 'production')
+  composeWithDevTools((process.env.NODE_ENV !== 'production')
     ? applyMiddleware(sagaMiddleware, logger)
     : applyMiddleware(sagaMiddleware)),
 );
