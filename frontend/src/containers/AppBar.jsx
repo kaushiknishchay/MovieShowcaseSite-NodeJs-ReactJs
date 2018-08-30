@@ -14,8 +14,11 @@ import isNil from 'lodash/isNil';
 import { Map } from 'immutable';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+
+
 import LoginForm from './LoginForm';
 import { doLogoutAction } from '../actions/index';
+import Strings from '../constants/strings';
 
 
 class CustomAppBar extends Component {
@@ -72,7 +75,7 @@ class CustomAppBar extends Component {
               flexGrow: 1,
             }}
           >
-            Photos
+            {Strings.appName}
           </Typography>
           {
             !isLoggedIn

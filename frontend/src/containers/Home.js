@@ -20,9 +20,9 @@ import ListSubheader from '@material-ui/core/ListSubheader/ListSubheader';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 
 import '../styles/css/App.css';
-import CustomAppBar from './AppBar';
 import MovieCard from '../components/MovieCard';
 import EmptyResult from '../components/EmptyResult';
+import PageBase from '../components/PageBase';
 
 
 class Home extends Component {
@@ -130,8 +130,7 @@ class Home extends Component {
 
 
     return (
-      <div>
-        <CustomAppBar />
+      <PageBase>
         <Carousel
           autoPlay
           showThumbs={false}
@@ -301,7 +300,7 @@ class Home extends Component {
             </Grid>
           </InfiniteScroll>
         </div>
-      </div>
+      </PageBase>
     );
   }
 }
