@@ -1,20 +1,34 @@
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import immutableTransform from 'redux-persist-transform-immutable';
 import rootReducer from '../reducers/index';
 import rootSagas from '../sagas';
 
 
-// create the saga middleware
+const persistConfig = {
+  transforms: [immutableTransform()],
+  key: 'root',
+  storage,
+  // whitelist: ['auth'],
+  // blacklist: ['auth'],
+};
+
 const sagaMiddleware = createSagaMiddleware();
 
-// create a redux store with our reducer above and middleware
+const pReducer = persistReducer(persistConfig, rootReducer);
+
 const store = createStore(
-  rootReducer,
-  applyMiddleware(sagaMiddleware, logger),
+  pReducer,
+  ((process.env.NODE_ENV !== 'production')
+    ? applyMiddleware(sagaMiddleware, logger)
+    : applyMiddleware(sagaMiddleware)),
 );
 
-// run the saga
 sagaMiddleware.run(rootSagas);
+
+export const persistor = persistStore(store);
 
 export default store;

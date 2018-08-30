@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button/Button';
 import AppBar from '@material-ui/core/AppBar';
 import connect from 'react-redux/es/connect/connect';
 import isNil from 'lodash/isNil';
-
+import { Map } from 'immutable';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
@@ -155,9 +155,10 @@ CustomAppBar.propTypes = {
 
 
 function initMapStateToProps(state) {
+  const mapAuth = Map(state.auth);
   return {
-    isAdmin: state.getIn(['auth', 'isAdmin']),
-    userAuthToken: state.getIn(['auth', 'authToken']),
+    isAdmin: mapAuth.get('isAdmin'),
+    userAuthToken: mapAuth.get('authToken'),
   };
 }
 

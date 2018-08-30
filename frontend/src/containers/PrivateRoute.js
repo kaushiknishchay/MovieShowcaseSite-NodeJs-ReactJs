@@ -3,6 +3,7 @@ import { Redirect, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/lang';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 
 
 class PrivateRoute extends React.Component {
@@ -34,9 +35,11 @@ class PrivateRoute extends React.Component {
 
 
 function initMapStateToProps(state) {
+  const mapAuth = Map(state.auth);
+
   return {
-    authToken: state.getIn(['auth', 'authToken']),
-    signInRequired: state.getIn(['auth', 'signInRequired']),
+    authToken: mapAuth.getIn(['authToken']),
+    signInRequired: mapAuth.getIn(['signInRequired']),
   };
 }
 

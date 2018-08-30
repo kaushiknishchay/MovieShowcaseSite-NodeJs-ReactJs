@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Typography from '@material-ui/core/Typography/Typography';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Immutable from 'immutable';
+import Immutable, { Map } from 'immutable';
 
 import { isNil } from 'lodash/lang';
 import { doLogin } from '../actions/index';
@@ -126,10 +126,12 @@ LoginForm.propTypes = {
 };
 
 function initMapStateToProps(state) {
+  const mapAuth = Map(state.auth);
+
   return {
-    loginLoading: state.getIn(['auth', 'loginLoading']),
-    userAuthToken: state.getIn(['auth', 'authToken']),
-    loginErrors: state.getIn(['auth', 'loginErrors']),
+    loginLoading: mapAuth.getIn(['loginLoading']),
+    userAuthToken: mapAuth.getIn(['authToken']),
+    loginErrors: mapAuth.getIn(['loginErrors']),
   };
 }
 
