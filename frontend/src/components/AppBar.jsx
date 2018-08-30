@@ -13,6 +13,7 @@ import connect from 'react-redux/es/connect/connect';
 import isNil from 'lodash/isNil';
 
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import { doLogoutAction } from '../actions';
 
@@ -117,8 +118,10 @@ class CustomAppBar extends Component {
                       </MenuItem>
                     )
                   }
-                  <MenuItem onClick={this.handleClose}>
-                    Profile
+                  <MenuItem>
+                    <Link to="/profile">
+                      Profile
+                    </Link>
                   </MenuItem>
                   <MenuItem onClick={this.handleClose}>
                     My account

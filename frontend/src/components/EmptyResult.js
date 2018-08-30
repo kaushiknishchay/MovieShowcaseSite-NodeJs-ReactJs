@@ -11,6 +11,7 @@ const EmptyResult = ({ title, subHeading }) => (
     style={{
       padding: '2em',
     }}
+    square
     elevation={0}
   >
     <div
