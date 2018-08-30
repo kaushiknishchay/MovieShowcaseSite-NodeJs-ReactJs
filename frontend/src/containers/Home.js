@@ -5,25 +5,24 @@ import range from 'lodash/range';
 import intersection from 'lodash/intersection';
 import filter from 'lodash/filter';
 import axios from 'axios';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Grid from '@material-ui/core/Grid';
-import Drawer from '@material-ui/core/Drawer/Drawer';
 import List from '@material-ui/core/List/List';
-import Divider from '@material-ui/core/Divider/Divider';
-import ListItem from '@material-ui/core/ListItem/ListItem';
-import ListItemText from '@material-ui/core/ListItemText/ListItemText';
-import InfiniteScroll from 'react-infinite-scroll-component';
-
-
-import ListSubheader from '@material-ui/core/ListSubheader/ListSubheader';
-import Checkbox from '@material-ui/core/Checkbox/Checkbox';
-import '../styles/css/App.css';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import { Carousel } from 'react-responsive-carousel';
+import Drawer from '@material-ui/core/Drawer/Drawer';
 import Button from '@material-ui/core/Button/Button';
-import MovieCard from './MovieCard';
+import Divider from '@material-ui/core/Divider/Divider';
+import Checkbox from '@material-ui/core/Checkbox/Checkbox';
+import ListItem from '@material-ui/core/ListItem/ListItem';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import ListItemText from '@material-ui/core/ListItemText/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader/ListSubheader';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+
+import '../styles/css/App.css';
 import CustomAppBar from './AppBar';
-import EmptyResult from './EmptyResult';
+import MovieCard from '../components/MovieCard';
+import EmptyResult from '../components/EmptyResult';
 
 
 class Home extends Component {

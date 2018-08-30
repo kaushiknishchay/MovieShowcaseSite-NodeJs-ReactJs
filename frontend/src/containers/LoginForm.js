@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import Immutable from 'immutable';
 
 import { isNil } from 'lodash/lang';
-import { doLogin } from '../actions';
+import { doLogin } from '../actions/index';
 
 
 class LoginForm extends Component {

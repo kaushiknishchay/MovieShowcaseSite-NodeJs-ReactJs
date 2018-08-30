@@ -15,7 +15,7 @@ import isNil from 'lodash/isNil';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
-import { doLogoutAction } from '../actions';
+import { doLogoutAction } from '../actions/index';
 
 
 class CustomAppBar extends Component {
