@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -16,6 +15,7 @@ import { bindActionCreators } from 'redux';
 import MovieCard from '../components/MovieCard';
 import EmptyResult from '../components/EmptyResult';
 import { fetchMovieList } from '../actions';
+import Selectors from '../selectors';
 
 
 class MovieGridContainer extends Component {
@@ -111,8 +111,8 @@ class MovieGridContainer extends Component {
             map(moviesToShow, movie => (
               <MovieCard
                 key={movie._id}
+                movieId={movie._id}
                 name={`${movie.name}`}
-                desc={movie.synopsis}
                 censorRating={movie.censorRating}
                 genre={movie.genre}
                 language={movie.languages}
@@ -128,11 +128,10 @@ class MovieGridContainer extends Component {
 }
 
 function initMapStateToProps(state) {
-  const movie = Map(state.movie);
   return {
-    moviesList: movie.get('moviesList').toJS(),
-    languageList: movie.get('languageList').toJS(),
-    genreList: movie.get('genreList').toJS(),
+    moviesList: Selectors.getAllMovies(state),
+    languageList: Selectors.getLanguageList(state),
+    genreList: Selectors.getGenreList(state),
   };
 }
 

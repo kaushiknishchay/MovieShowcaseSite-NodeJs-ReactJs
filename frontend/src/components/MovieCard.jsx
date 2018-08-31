@@ -8,14 +8,16 @@ import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip/Chip';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import HeartIcon from '@material-ui/icons/Favorite';
+import { Link } from 'react-router-dom';
 
 
 class MovieCard extends Component {
   render() {
     const {
-      name, desc, userRating,
+      name, userRating,
       poster, language,
       censorRating, genre,
+      movieId,
     } = this.props;
 
     return (
@@ -28,81 +30,84 @@ class MovieCard extends Component {
         xl={3}
         className="movie_card"
       >
-        <Card className="movie_card__container">
-          <div className="movie_card__favorite__container">
-            <HeartIcon />
-          </div>
-          <CardMedia
-            style={{
-              width: '100%',
-              height: '300px',
-              minWidth: 250,
-              minHeight: 250,
-            }}
-            image={poster}
-            title={name}
-          />
+        <Link to={`/movie/${movieId}`}>
+          <Card className="movie_card__container">
+            <div className="movie_card__favorite__container">
+              <HeartIcon />
+            </div>
+            <CardMedia
+              style={{
+                width: '100%',
+                height: '300px',
+                minWidth: 250,
+                minHeight: 250,
+              }}
+              image={poster}
+              title={name}
+            />
 
-          <CardContent
-            className="movie_card__container__content"
-          >
-            <Typography
-              variant="title"
-              align="left"
-              gutterBottom
-              noWrap
+            <CardContent
+              className="movie_card__container__content"
             >
-              {name}
-            </Typography>
+              <Typography
+                variant="title"
+                align="left"
+                gutterBottom
+                noWrap
+              >
+                {name}
+              </Typography>
 
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              gutterBottom
-            >
-              {`${censorRating} | ${genre} | ${language}`}
-            </Typography>
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                gutterBottom
+              >
+                {`${censorRating} | ${genre} | ${language}`}
+              </Typography>
 
-            <Typography
-              variant="caption"
-              noWrap
-              gutterBottom
-            >
-              <Chip
-                classes={{
-                  root: 'favorite__container',
-                  avatar: 'favorite__container__icon',
-                }}
-                avatar={(
-                  <Avatar>
-                    <HeartIcon />
-                  </Avatar>
-                )}
-                label={`${(userRating * 10).toFixed(0)}%`}
-                color="secondary"
-              />
-            </Typography>
-          </CardContent>
-        </Card>
+              <Typography
+                variant="caption"
+                noWrap
+                gutterBottom
+              >
+                <Chip
+                  classes={{
+                    root: 'favorite__container',
+                    avatar: 'favorite__container__icon',
+                  }}
+                  avatar={(
+                    <Avatar>
+                      <HeartIcon />
+                    </Avatar>
+                  )}
+                  label={`${(userRating * 10).toFixed(0)}%`}
+                  color="secondary"
+                />
+              </Typography>
+            </CardContent>
+          </Card>
+        </Link>
       </Grid>
     );
   }
 }
 
 MovieCard.defaultProps = {
-  desc: null,
   poster: '',
   language: 'English',
   censorRating: 'UA',
   genre: 'Action',
+  userRating: 0,
 };
 
 MovieCard.propTypes = {
+  movieId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   language: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   genre: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   censorRating: PropTypes.string,
-  desc: PropTypes.string,
+  userRating: PropTypes.number,
   poster: PropTypes.string,
 };
 
