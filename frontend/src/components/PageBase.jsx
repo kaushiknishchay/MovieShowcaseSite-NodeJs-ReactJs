@@ -8,7 +8,7 @@ const PageBase = ({ children }) => (
     <CustomAppBar />
     <div
       style={{
-        height: 80,
+        height: 64,
       }}
     />
     {children}

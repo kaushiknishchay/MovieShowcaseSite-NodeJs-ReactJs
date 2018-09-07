@@ -21,7 +21,12 @@ const CustomPaper = ({ classes, children, ...props }) => (
 
 CustomPaper.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.element, PropTypes.string]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.element,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 

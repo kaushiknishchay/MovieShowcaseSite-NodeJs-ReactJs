@@ -116,8 +116,10 @@ class CustomAppBar extends Component {
                   {
                     isAdmin
                     && (
-                      <MenuItem onClick={this.handleClose}>
-                        Admin Panel
+                      <MenuItem>
+                        <Link to="/admin/home">
+                          Admin Panel
+                        </Link>
                       </MenuItem>
                     )
                   }
