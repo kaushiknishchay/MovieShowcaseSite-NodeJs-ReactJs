@@ -9,15 +9,15 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   name: {
     type: String,
-    default: ''
+    required: true
   },
   email: {
     type: String,
-    default: ''
+    required: true
   },
   password: {
     type: String,
-    default: ''
+    required: true
   },
   role: {
     type: String,
@@ -26,4 +26,4 @@ var UserSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('User', UserSchema, 'users');
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema, 'users');
