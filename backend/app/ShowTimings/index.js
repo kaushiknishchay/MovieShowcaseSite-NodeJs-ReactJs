@@ -4,7 +4,7 @@ var ShowTimingsController = require('./controller');
 module.exports = function (passport) {
 
   Router.get(
-    '/showtimings/:movieId/',
+    '/showtimings/:movieId/:cinemaId?',
     ShowTimingsController.getAllMovieTimings
   );
 

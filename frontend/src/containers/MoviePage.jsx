@@ -1,4 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,12 +14,12 @@ import Chip from '@material-ui/core/Chip/Chip';
 import Icon from '@material-ui/core/Icon/Icon';
 import Button from '@material-ui/core/Button';
 
-
 import Selectors from '../selectors';
 import NotFound from '../components/NotFound';
 import PageBase from '../components/PageBase';
 import CustomPaper from '../components/ui/CustomPaper';
 import CastAvatar from '../components/CastAvatar';
+import CinemaSection from '../components/CinemaSection';
 
 
 class MoviePage extends Component {
@@ -212,18 +213,10 @@ class MoviePage extends Component {
               </Grid>
             </Grid>
           </CustomPaper>
-          <CustomPaper
-            classes={{
-              root: 'dark-paper',
-            }}
-          >
-            <Typography
-              color="inherit"
-              variant="headline"
-            >
-              Cinemas
-            </Typography>
-          </CustomPaper>
+          <CinemaSection
+            cinemas={movieInfo.cinemas}
+            movieId={movieInfo._id}
+          />
         </div>
       </PageBase>
     );

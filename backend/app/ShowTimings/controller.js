@@ -3,11 +3,18 @@ const ShowTimings = require('../../models/ShowTimings');
 const getAllMovieTimings = function (req, res, next) {
   const {
     movieId,
+    cinemaId,
   } = req.params;
 
-  if (movieId) {
+  if (movieId & !cinemaId) {
     ShowTimings
       .find({ movie: movieId })
+      .exec()
+      .then(allTimings => res.json(allTimings))
+      .catch(err => next(err));
+  } else if (movieId && cinemaId) {
+    ShowTimings
+      .find({ movie: movieId, cinema: cinemaId })
       .exec()
       .then(allTimings => res.json(allTimings))
       .catch(err => next(err));

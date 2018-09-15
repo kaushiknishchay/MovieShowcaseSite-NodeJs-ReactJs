@@ -54,6 +54,9 @@ class CustomAppBar extends Component {
 
     return (
       <AppBar
+        style={{
+          backgroundImage: 'linear-gradient(to top right, rgba(146, 4, 55, 0.98), rgba(150, 6, 79, 0.92))'
+        }}
         position="static"
         color="primary"
       >

@@ -8,4 +8,5 @@ export default {
   }),
 
   fetchMovies: () => httpRequest.get('movie'),
+  getMovieShowsByCinema: (movieId, cinemaId) => httpRequest.get(`/showtimings/${movieId}/${cinemaId}`),
 };
