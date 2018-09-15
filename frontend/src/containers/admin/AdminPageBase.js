@@ -12,8 +12,8 @@ const AdminPageBase = ({ children }) => (
     <div className="content">
       <Grid container spacing={24}>
         <AdminSideBar />
-        <Grid item xs={9}>
-          <CustomPaper>
+        <Grid item xs={12} lg={9}>
+          <CustomPaper dark>
             {children}
           </CustomPaper>
         </Grid>

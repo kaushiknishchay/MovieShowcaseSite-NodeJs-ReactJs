@@ -38,9 +38,7 @@ class MoviePage extends Component {
       <PageBase>
         <div className="content col">
           <CustomPaper
-            classes={{
-              root: 'dark-paper',
-            }}
+            dark
             elevation={0}
           >
             <Grid

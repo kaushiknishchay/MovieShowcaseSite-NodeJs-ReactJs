@@ -13,13 +13,33 @@ const styles = theme => ({
   },
 });
 
-const CustomPaper = ({ classes, children, ...props }) => (
-  <Paper className={classes.root} {...props}>
+const CustomPaper = ({
+  classes, children, dark, ...props
+}) => (
+  <Paper
+    className={
+      dark
+        ? `${classes.root} dark-paper`
+        : classes.root
+    }
+    k={console.log([
+      dark ? {
+        root: `${classes.root} dark-paper`,
+      } : {
+        root: classes.root,
+      }])}
+    {...props}
+  >
     {children}
   </Paper>
 );
 
+CustomPaper.defaultProps = {
+  dark: false,
+};
+
 CustomPaper.propTypes = {
+  dark: PropTypes.bool,
   classes: PropTypes.object.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.array,

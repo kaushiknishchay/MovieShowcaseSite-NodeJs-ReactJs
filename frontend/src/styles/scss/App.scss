@@ -37,10 +37,17 @@ $accentColor: #ec407a;
   flex-direction: column;
 }
 
+.white-text {
+  color: #ececec;
+  > span {
+    color: #ececec;
+  }
+}
+
 .dark-paper {
   color: #ececec;
   border: none;
-  background: transparent !important;
+  background: #383636e6 !important;
 }
 
 .legend {

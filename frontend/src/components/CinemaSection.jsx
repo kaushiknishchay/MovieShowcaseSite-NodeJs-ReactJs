@@ -15,9 +15,7 @@ const CinemaSection = ({
   !isEmpty(cinemas) ? (
     <CustomPaper
       elevation={0}
-      classes={{
-        root: 'dark-paper',
-      }}
+      dark
     >
       <Typography
         color="inherit"
