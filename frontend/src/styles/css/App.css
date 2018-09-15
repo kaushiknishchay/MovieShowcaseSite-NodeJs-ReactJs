@@ -26,6 +26,12 @@
 .col {
   flex-direction: column; }
 
+.select-dropdown {
+  margin-bottom: 10px;
+  color: white; }
+  .select-dropdown > label {
+    color: white; }
+
 .white-text {
   color: #ececec; }
   .white-text > span {

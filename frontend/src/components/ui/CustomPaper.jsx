@@ -22,12 +22,6 @@ const CustomPaper = ({
         ? `${classes.root} dark-paper`
         : classes.root
     }
-    k={console.log([
-      dark ? {
-        root: `${classes.root} dark-paper`,
-      } : {
-        root: classes.root,
-      }])}
     {...props}
   >
     {children}

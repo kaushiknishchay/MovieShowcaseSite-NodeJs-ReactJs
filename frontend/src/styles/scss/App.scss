@@ -37,6 +37,14 @@ $accentColor: #ec407a;
   flex-direction: column;
 }
 
+.select-dropdown {
+  margin-bottom: 10px;
+  color: white;
+  > label {
+    color: white;
+  }
+}
+
 .white-text {
   color: #ececec;
   > span {
