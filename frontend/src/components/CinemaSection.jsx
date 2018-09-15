@@ -50,7 +50,7 @@ const CinemaSection = ({
 );
 
 CinemaSection.propTypes = {
-  cinemas: PropTypes.object,
+  cinemas: PropTypes.array,
   movieId: PropTypes.string.isRequired,
 };
 
