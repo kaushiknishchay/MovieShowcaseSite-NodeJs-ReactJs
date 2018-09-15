@@ -69,6 +69,7 @@ class Home extends Component {
 
         <div className="content">
           <Drawer
+            elevation={0}
             variant="permanent"
             classes={{
               docked: 'drawer__container',

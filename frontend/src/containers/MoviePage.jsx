@@ -10,10 +10,15 @@ import Typography from '@material-ui/core/Typography/Typography';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import HeartIcon from '@material-ui/icons/Favorite';
 import Chip from '@material-ui/core/Chip/Chip';
+import Icon from '@material-ui/core/Icon/Icon';
+import Button from '@material-ui/core/Button';
+
+
 import Selectors from '../selectors';
 import NotFound from '../components/NotFound';
 import PageBase from '../components/PageBase';
 import CustomPaper from '../components/ui/CustomPaper';
+import CastAvatar from '../components/CastAvatar';
 
 
 class MoviePage extends Component {
@@ -25,61 +30,125 @@ class MoviePage extends Component {
 
     const {
       censorRating, genre, languages,
-      duration,
+      duration, releaseDate,
       cast,
     } = movieInfo;
     return (
       <PageBase>
-        <div className="content">
-          <CustomPaper>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={5} md={4} lg={3}>
+        <div className="content col">
+          <CustomPaper
+            classes={{
+              root: 'dark-paper',
+            }}
+            elevation={0}
+          >
+            <Grid
+              container
+              spacing={40}
+              style={{
+                width: 'calc(100vw - 80px)',
+              }}
+            >
+              <Grid
+                item
+                xs={12}
+                sm={5}
+                md={4}
+                lg={3}
+              >
                 <CardMedia
-                  component="img"
-                  height="450"
+                  component="div"
+                  style={{
+                    height: '100%',
+                    maxHeight: 400,
+                    minHeight: 400,
+                    borderRadius: 4,
+                  }}
                   image={movieInfo.poster}
                   title={movieInfo.name}
-                />
+                >
+                  {
+                    !isEmpty(movieInfo.trailer)
+                    && (
+                      <div className="trailer__play_icon">
+                        <a href={movieInfo.trailer} target="_blank" rel="noopener noreferrer">
+                          <Icon>
+                            play_arrow
+                          </Icon>
+                        </a>
+                      </div>
+                    )
+                  }
+                </CardMedia>
               </Grid>
-              <Grid item xs={12} sm={7} md={8} lg={9}>
+              <Grid
+                item
+                xs={12}
+                sm={7}
+                md={8}
+                lg={9}
+              >
+                <div style={{
+                  height: 60,
+                  float: 'right',
+                  display: 'block',
+                  textAlign: 'right',
+                }}
+                >
+                  <Button
+                    variant="extendedFab"
+                    aria-label="Book Tickets"
+                    className="book_ticket__button"
+                  >
+                    Book Tickets
+                    <Icon>
+                      local_movies
+                    </Icon>
+                  </Button>
+                </div>
                 <Typography
-                  variant="display2"
+                  variant="display1"
                   gutterBottom
+                  color="inherit"
                 >
                   {movieInfo.name}
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      margin: '0 1em',
+                    }}
+                  >
+                    <Chip
+                      classes={{
+                        root: 'favorite__container',
+                        avatar: 'favorite__container__icon',
+                      }}
+                      avatar={(
+                        <Avatar>
+                          <HeartIcon />
+                        </Avatar>
+                      )}
+                      label={`${(movieInfo.userRating * 10).toFixed(0)}%`}
+                      color="secondary"
+                    />
+                  </div>
                 </Typography>
                 <Typography
+                  color="inherit"
                   variant="subheading"
                   gutterBottom
                 >
-                  {`${censorRating}  |  ${genre.join(', ')}  |  ${languages.join(', ')} | ${duration}`}
+                  {`${censorRating}  |  ${genre.join(', ')}  |  ${languages.join(', ')}`}
                 </Typography>
-                <div
-                  style={{
-                    display: 'block',
-                    marginBottom: '1em',
-                  }}
-                >
-                  <Chip
-                    classes={{
-                      root: 'favorite__container',
-                      avatar: 'favorite__container__icon',
-                    }}
-                    avatar={(
-                      <Avatar>
-                        <HeartIcon />
-                      </Avatar>
-                    )}
-                    label={`${(movieInfo.userRating * 10).toFixed(0)}%`}
-                    color="secondary"
-                  />
-                </div>
                 <br />
 
                 <Typography
-                  variant="headline"
+                  variant="subheading"
+                  color="inherit"
                   gutterBottom
                 >
+                  {`Release Date: ${new Date(releaseDate).toDateString()}`}
+                  <br />
                   {`Duration: ${duration}min`}
                 </Typography>
                 <br />
@@ -95,11 +164,13 @@ class MoviePage extends Component {
                       <Typography
                         variant="headline"
                         gutterBottom
+                        color="inherit"
                       >
                         Synopsis
                       </Typography>
                       <Typography
                         variant="body1"
+                        color="inherit"
                         gutterBottom
                       >
                         {movieInfo.synopsis}
@@ -118,6 +189,7 @@ class MoviePage extends Component {
                     >
                       <Typography
                         variant="headline"
+                        color="inherit"
                         gutterBottom
                       >
                         Cast
@@ -125,50 +197,32 @@ class MoviePage extends Component {
                       <div
                         style={{
                           width: '100%',
+                          maxWidth: 880,
                           display: 'flex',
                           overflowX: 'scroll',
                           marginBottom: '1em',
                         }}
                       >
                         {
-                          map(cast, (c) => {
-                            let initials = c.name.match(/\b\w/g) || [];
-                            initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
-                            if (!c.photo) {
-                              return (
-                                <Avatar
-                                  key={c.name}
-                                  alt={c.name}
-                                  src={c.photo}
-                                  style={{
-                                    height: 60,
-                                    width: 60,
-                                    margin: 5,
-                                  }}
-                                >
-                                  {initials}
-                                </Avatar>
-                              );
-                            }
-                            return (
-                              <Avatar
-                                key={c.name}
-                                alt={c.name}
-                                src={c.photo}
-                                style={{
-                                  height: 60,
-                                  width: 60,
-                                  margin: 10,
-                                }}
-                              />);
-                          })
+                          map(cast, c => <CastAvatar key={c.name} cast={c} />)
                         }
                       </div>
                     </div>)
                 }
-                {JSON.stringify(movieInfo)}
               </Grid>
             </Grid>
+          </CustomPaper>
+          <CustomPaper
+            classes={{
+              root: 'dark-paper',
+            }}
+          >
+            <Typography
+              color="inherit"
+              variant="headline"
+            >
+              Cinemas
+            </Typography>
           </CustomPaper>
         </div>
       </PageBase>

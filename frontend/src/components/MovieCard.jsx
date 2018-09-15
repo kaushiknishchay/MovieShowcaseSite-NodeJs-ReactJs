@@ -36,56 +36,53 @@ class MovieCard extends Component {
               <HeartIcon />
             </div>
             <CardMedia
-              style={{
-                width: '100%',
-                height: '300px',
-                minWidth: 250,
-                minHeight: 250,
-              }}
+              className="movie_card__container__poster"
               image={poster}
               title={name}
-            />
-
-            <CardContent
-              className="movie_card__container__content"
             >
-              <Typography
-                variant="title"
-                align="left"
-                gutterBottom
-                noWrap
-              >
-                {name}
-              </Typography>
 
-              <Typography
-                variant="caption"
-                color="textSecondary"
-                gutterBottom
+              <CardContent
+                className="movie_card__container__content"
               >
-                {`${censorRating} | ${genre} | ${language}`}
-              </Typography>
+                <Typography
+                  variant="title"
+                  align="left"
+                  gutterBottom
+                  color="inherit"
+                  noWrap
+                >
+                  {name}
+                </Typography>
 
-              <Typography
-                variant="caption"
-                noWrap
-                gutterBottom
-              >
-                <Chip
-                  classes={{
-                    root: 'favorite__container',
-                    avatar: 'favorite__container__icon',
-                  }}
-                  avatar={(
-                    <Avatar>
-                      <HeartIcon />
-                    </Avatar>
-                  )}
-                  label={`${(userRating * 10).toFixed(0)}%`}
-                  color="secondary"
-                />
-              </Typography>
-            </CardContent>
+                <Typography
+                  variant="caption"
+                  color="inherit"
+                  gutterBottom
+                  noWrap
+                >
+                  {`${censorRating} | ${language}`}
+                </Typography>
+
+                <Typography
+                  variant="caption"
+                  noWrap
+                >
+                  <Chip
+                    classes={{
+                      root: 'favorite__container',
+                      avatar: 'favorite__container__icon',
+                    }}
+                    avatar={(
+                      <Avatar>
+                        <HeartIcon />
+                      </Avatar>
+                    )}
+                    label={`${(userRating * 10).toFixed(0)}%`}
+                    color="secondary"
+                  />
+                </Typography>
+              </CardContent>
+            </CardMedia>
           </Card>
         </Link>
       </Grid>

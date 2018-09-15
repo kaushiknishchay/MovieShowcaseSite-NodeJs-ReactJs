@@ -54,7 +54,7 @@ class CustomAppBar extends Component {
 
     return (
       <AppBar
-        position="fixed"
+        position="static"
         color="primary"
       >
         <Toolbar>

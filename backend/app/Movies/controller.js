@@ -12,6 +12,7 @@ const getAllMovies = function (req, res, next) {
     Movie
       .findById(movieId)
       .populate('cast', ['name', 'roleName', 'photo'])
+      .populate('cinemas', ['name', 'address', 'screenTypes'])
       .exec()
       .then(movie => res.json(movie))
       .catch(err => next(err));
@@ -19,6 +20,7 @@ const getAllMovies = function (req, res, next) {
     Movie
       .find()
       .populate('cast', ['name', 'roleName', 'photo'])
+      .populate('cinemas', ['name', 'address', 'screenTypes'])
       .exec()
       .then(movie => res.json(movie))
       .catch(err => next(err));

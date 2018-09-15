@@ -83,7 +83,7 @@ class MovieGridContainer extends Component {
         next={this.fetchMoreMovies}
         hasMore={hasMoreMovies}
         loader={(
-          <div style={{ margin: '20px auto', width: '100%', textAlign: 'center' }}>
+          <div className="infinite-scroll-loading__wrap">
             <CircularProgress />
           </div>
         )}

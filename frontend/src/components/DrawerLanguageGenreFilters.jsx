@@ -22,6 +22,7 @@ const DrawerLanguageGenreFilters = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          color: '#e8e8e8',
           flexDirection: 'row',
         }}
       >
@@ -53,7 +54,10 @@ const DrawerLanguageGenreFilters = ({
             tabIndex={-1}
             disableRipple
           />
-          <ListItemText primary={lang} />
+          <ListItemText
+            primary={lang}
+            className="side_drawer__list__item"
+          />
         </ListItem>
       ))}
     <ListSubheader component="div">
@@ -62,6 +66,7 @@ const DrawerLanguageGenreFilters = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          color: '#e8e8e8',
           flexDirection: 'row',
         }}
       >
@@ -93,7 +98,10 @@ const DrawerLanguageGenreFilters = ({
             tabIndex={-1}
             disableRipple
           />
-          <ListItemText primary={genre} />
+          <ListItemText
+            primary={genre}
+            className="side_drawer__list__item"
+          />
         </ListItem>
       ))}
   </List>
